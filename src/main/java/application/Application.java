@@ -48,10 +48,10 @@ public final class Application {
         }
     };
 
-    private interface Converter extends UnaryOperator<List<Product>> {}
+    private interface ProductListConverter extends UnaryOperator<List<Product>> {}
 
-    private static final HashMap<UserAction, Converter> converters =
-            new HashMap<UserAction, Converter>() {
+    private static final HashMap<UserAction, ProductListConverter> converters =
+            new HashMap<UserAction, ProductListConverter>() {
         {
             put(UserAction.NO_FILTER, (l) -> l);
             put(UserAction.FILTER_BOOKS, ProductUtils::filterBooks);
@@ -117,7 +117,7 @@ public final class Application {
         );
         if (menu_item == UserAction.WRONG_INPUT)
             return;
-        Converter filter = converters.get(menu_item);
+        ProductListConverter filter = converters.get(menu_item);
 
         menu_item = UserInteraction.askForUserAction(
                 Resources.sortOptions,
@@ -125,7 +125,7 @@ public final class Application {
         );
         if (menu_item == UserAction.WRONG_INPUT)
             return;
-        Converter sort = converters.get(menu_item);
+        ProductListConverter sort = converters.get(menu_item);
 
         UserInteraction.say(
                 filter.andThen(sort).apply(store.toList())

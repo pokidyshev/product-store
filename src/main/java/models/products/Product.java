@@ -2,11 +2,11 @@ package models.products;
 
 import java.io.Serializable;
 
-public abstract class Product implements Serializable {
+public class Product implements Serializable {
     private long id;
     private double price;
 
-    Product(long id, double price) {
+    public Product(long id, double price) {
         this.id = id;
         this.price = price;
     }
@@ -22,7 +22,9 @@ public abstract class Product implements Serializable {
         this.price = price;
     }
 
-    public abstract ProductType getType();
+    public ProductType getType() {
+        return ProductType.NONE;
+    }
 
     @Override
     public String toString() {
